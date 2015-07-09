@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportDetailed));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonEdit = new System.Windows.Forms.Button();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.labelDescription = new System.Windows.Forms.Label();
             this.buttonPrevDay = new System.Windows.Forms.Button();
             this.buttonNextDay = new System.Windows.Forms.Button();
@@ -48,6 +51,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.buttonDelete);
+            this.panel1.Controls.Add(this.buttonEdit);
+            this.panel1.Controls.Add(this.buttonAdd);
             this.panel1.Controls.Add(this.labelDescription);
             this.panel1.Controls.Add(this.buttonPrevDay);
             this.panel1.Controls.Add(this.buttonNextDay);
@@ -58,15 +64,54 @@
             this.panel1.Size = new System.Drawing.Size(763, 281);
             this.panel1.TabIndex = 3;
             // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Image = global::TimeTracker.Properties.Resources.edit_delete24;
+            this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDelete.Location = new System.Drawing.Point(5, 82);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(96, 33);
+            this.buttonDelete.TabIndex = 7;
+            this.buttonDelete.Text = "Delete";
+            this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // buttonEdit
+            // 
+            this.buttonEdit.Image = global::TimeTracker.Properties.Resources.edit_go24;
+            this.buttonEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonEdit.Location = new System.Drawing.Point(5, 43);
+            this.buttonEdit.Name = "buttonEdit";
+            this.buttonEdit.Size = new System.Drawing.Size(96, 33);
+            this.buttonEdit.TabIndex = 6;
+            this.buttonEdit.Text = "Edit";
+            this.buttonEdit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
+            // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Image = global::TimeTracker.Properties.Resources.edit_add24;
+            this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAdd.Location = new System.Drawing.Point(5, 4);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(96, 33);
+            this.buttonAdd.TabIndex = 5;
+            this.buttonAdd.Text = "Add";
+            this.buttonAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
             // labelDescription
             // 
             this.labelDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDescription.ForeColor = System.Drawing.Color.DarkCyan;
-            this.labelDescription.Location = new System.Drawing.Point(114, 238);
+            this.labelDescription.Location = new System.Drawing.Point(209, 238);
             this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(535, 31);
+            this.labelDescription.Size = new System.Drawing.Size(440, 31);
             this.labelDescription.TabIndex = 4;
             this.labelDescription.Text = "Today";
             this.labelDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -76,7 +121,7 @@
             this.buttonPrevDay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonPrevDay.Image = global::TimeTracker.Properties.Resources.previous_record;
             this.buttonPrevDay.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonPrevDay.Location = new System.Drawing.Point(12, 236);
+            this.buttonPrevDay.Location = new System.Drawing.Point(107, 236);
             this.buttonPrevDay.Name = "buttonPrevDay";
             this.buttonPrevDay.Size = new System.Drawing.Size(96, 33);
             this.buttonPrevDay.TabIndex = 2;
@@ -113,9 +158,9 @@
             this.PMONumber,
             this.PMODesc,
             this.TimeAccrued});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Location = new System.Drawing.Point(107, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(763, 230);
+            this.dataGridView1.Size = new System.Drawing.Size(656, 230);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
@@ -192,5 +237,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PMONumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn PMODesc;
         private System.Windows.Forms.DataGridViewTextBoxColumn TimeAccrued;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.Button buttonAdd;
     }
 }

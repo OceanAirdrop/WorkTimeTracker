@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TimeTracker.Data
 {
-    class TimeSheetDetailData
+    public class TimeSheetDetailData
     {
         public string m_workId;
         public string m_date;

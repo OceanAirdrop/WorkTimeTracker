@@ -17,6 +17,8 @@ namespace TimeTracker
 {
     public partial class MainForm : Form
     {
+        public static MainForm m_handle = null;
+
         private Timer m_timer;
         System.Diagnostics.Stopwatch m_stopWatch = null;
 
@@ -34,6 +36,8 @@ namespace TimeTracker
         public MainForm()
         {
             InitializeComponent();
+
+            m_handle = this;
         }
 
         private void labelCurrentTimer_Click(object sender, EventArgs e)
@@ -317,7 +321,7 @@ namespace TimeTracker
             m_stopWatch.Stop();
         }
 
-        private void UpdateTotalTimeWorkedToday()
+        public void UpdateTotalTimeWorkedToday()
         {
             try
             {
@@ -401,6 +405,7 @@ namespace TimeTracker
         private void buttonManualEntry_Click(object sender, EventArgs e)
         {
             ReportDetailed dlg = new ReportDetailed();
+            dlg.m_mode = ReportMode.EditMode;
             dlg.Show();
         }
     }
