@@ -16,6 +16,8 @@ namespace TimeTracker.Dialogs
     {
         public enum Mode { AddMode, EditMode, DeleteMode }; Mode m_mode;
 
+        public enum UserFieldTrigger { None, StartTime, EndTime, FriendlyTime }; UserFieldTrigger m_userTrigger;
+
         public TimeSheetDetailData m_data = null;
 
         public List<TimerType> m_timerList = null;
@@ -54,11 +56,15 @@ namespace TimeTracker.Dialogs
 
                 if (m_mode == Mode.EditMode)
                 {
+                    // ensure dates are in the correct format to be written to the db
+                    string endDate = DBHelper.DateToDBDateTime(Convert.ToDateTime(textBoxWorkEndTime.Text));
+                    string statDate = DBHelper.DateToDBDateTime(Convert.ToDateTime(textBoxWorkStartDate.Text));
+
                     // update statment
                     sb.AppendLine("UPDATE time_sheet SET ");
                     sb.AppendLine(string.Format("date = '{0}'", textBoxDate.Text));
-                    sb.AppendLine(string.Format(",work_start_time = '{0}'", textBoxWorkStartDate.Text));
-                    sb.AppendLine(string.Format(",work_end_time = '{0}'", textBoxWorkEndTime.Text));
+                    sb.AppendLine(string.Format(",work_start_time = '{0}'", statDate));
+                    sb.AppendLine(string.Format(",work_end_time = '{0}'", endDate));
                     sb.AppendLine(string.Format(",pmo_number = '{0}'", textBoxPMONumber.Text));
                     sb.AppendLine(string.Format(",mins_accrued = '{0}'", textBoxTimeAccrued.Text));
                     sb.AppendLine(string.Format("WHERE work_id = '{0}'", textBoxWorkId.Text));
@@ -181,7 +187,8 @@ namespace TimeTracker.Dialogs
 
                 textBoxTimeAccrued.Text = duration.TotalMinutes.ToString();
 
-                SetFriendlyTime();
+                if ( m_userTrigger != UserFieldTrigger.FriendlyTime )
+                    SetFriendlyTime();
 
                 buttonOK.Enabled = true;
             }
@@ -195,14 +202,17 @@ namespace TimeTracker.Dialogs
 
         private void textBoxWorkStartDate_TextChanged(object sender, EventArgs e)
         {
-            StartOrEndDateModified();
+            if (m_userTrigger == UserFieldTrigger.None)
+                m_userTrigger = UserFieldTrigger.StartTime;
 
+            StartOrEndDateModified();
         }
 
         private void textBoxWorkEndTime_TextChanged(object sender, EventArgs e)
         {
+            if (m_userTrigger == UserFieldTrigger.None)
+                m_userTrigger = UserFieldTrigger.EndTime;
             StartOrEndDateModified();
-
         }
 
         private void textBoxTimeAccrued_TextChanged(object sender, EventArgs e)
@@ -219,6 +229,47 @@ namespace TimeTracker.Dialogs
                     textBoxPMONumber.Text = item.pmo_num;
                     break;
                 }
+            }
+        }
+
+        private void textBoxFriendlyTime_TextChanged(object sender, EventArgs e)
+        {
+            m_userTrigger = UserFieldTrigger.FriendlyTime;
+            FriendlyTimeModified();
+            m_userTrigger = UserFieldTrigger.None;
+        }
+
+        private void FriendlyTimeModified()
+        {
+            try
+            {
+                labelError.Hide();
+
+                // Step 01: Convet String into TimeSpan
+                var split = textBoxFriendlyTime.Text.Split(':');
+                TimeSpan span = new TimeSpan( Convert.ToInt32(split[0]), Convert.ToInt32(split[1]), Convert.ToInt32(split[2]));
+
+                // Step 02: Generate new End Time
+                DateTime dtStart = Convert.ToDateTime(textBoxWorkStartDate.Text);
+                DateTime dtEnd = dtStart.Add(span);
+
+                // Step 03: Check new TimeSpan is valid
+                TimeSpan duration = dtEnd.Subtract(dtStart);
+
+                if (duration.TotalMinutes < 0)
+                    throw new Exception("invalid"); // move to exception block
+
+                // Step 04: Update New End Time
+                textBoxWorkEndTime.Text = DBHelper.DateToDBDateTime(dtEnd);
+               
+
+                buttonOK.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                buttonOK.Enabled = false;
+                labelError.Show();
+                labelError.Text = "Invalid Time Selection";
             }
         }
     }

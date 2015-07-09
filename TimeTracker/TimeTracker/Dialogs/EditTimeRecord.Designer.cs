@@ -196,11 +196,11 @@
             // 
             // textBoxFriendlyTime
             // 
-            this.textBoxFriendlyTime.Enabled = false;
             this.textBoxFriendlyTime.Location = new System.Drawing.Point(346, 188);
             this.textBoxFriendlyTime.Name = "textBoxFriendlyTime";
             this.textBoxFriendlyTime.Size = new System.Drawing.Size(79, 20);
             this.textBoxFriendlyTime.TabIndex = 21;
+            this.textBoxFriendlyTime.TextChanged += new System.EventHandler(this.textBoxFriendlyTime_TextChanged);
             // 
             // comboBoxDescription
             // 
