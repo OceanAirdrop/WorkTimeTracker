@@ -6,6 +6,8 @@ Track your time in work areas or amongst projects
 
 ![alt tag](https://raw.githubusercontent.com/OceanAirdrop/WorkTimeTracker/master/Screenshots/SummaryReport.png)
 
+![alt tag](https://raw.githubusercontent.com/OceanAirdrop/WorkTimeTracker/master/Screenshots/EditTimeRecord.png)
+
 Features:
 
 * Uses SQLLite to store users time tracking Information
