@@ -48,12 +48,12 @@
             this.comboBoxDescription = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.labelError = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.labelError = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonCancel
@@ -108,7 +108,6 @@
             // 
             // textBoxDate
             // 
-            this.textBoxDate.Enabled = false;
             this.textBoxDate.Location = new System.Drawing.Point(130, 49);
             this.textBoxDate.Name = "textBoxDate";
             this.textBoxDate.Size = new System.Drawing.Size(135, 20);
@@ -251,16 +250,14 @@
             this.panel1.Size = new System.Drawing.Size(445, 293);
             this.panel1.TabIndex = 1;
             // 
-            // labelError
+            // pictureBox2
             // 
-            this.labelError.AutoSize = true;
-            this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelError.ForeColor = System.Drawing.Color.Red;
-            this.labelError.Location = new System.Drawing.Point(15, 259);
-            this.labelError.Name = "labelError";
-            this.labelError.Size = new System.Drawing.Size(34, 13);
-            this.labelError.TabIndex = 24;
-            this.labelError.Text = "Error";
+            this.pictureBox2.Image = global::TimeTracker.Properties.Resources.settings;
+            this.pictureBox2.Location = new System.Drawing.Point(7, 23);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(25, 30);
+            this.pictureBox2.TabIndex = 26;
+            this.pictureBox2.TabStop = false;
             // 
             // pictureBox1
             // 
@@ -271,14 +268,16 @@
             this.pictureBox1.TabIndex = 25;
             this.pictureBox1.TabStop = false;
             // 
-            // pictureBox2
+            // labelError
             // 
-            this.pictureBox2.Image = global::TimeTracker.Properties.Resources.settings;
-            this.pictureBox2.Location = new System.Drawing.Point(7, 23);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(25, 30);
-            this.pictureBox2.TabIndex = 26;
-            this.pictureBox2.TabStop = false;
+            this.labelError.AutoSize = true;
+            this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelError.ForeColor = System.Drawing.Color.Red;
+            this.labelError.Location = new System.Drawing.Point(15, 259);
+            this.labelError.Name = "labelError";
+            this.labelError.Size = new System.Drawing.Size(34, 13);
+            this.labelError.TabIndex = 24;
+            this.labelError.Text = "Error";
             // 
             // EditTimeRecord
             // 
@@ -293,8 +292,8 @@
             this.Load += new System.EventHandler(this.EditTimeRecord_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

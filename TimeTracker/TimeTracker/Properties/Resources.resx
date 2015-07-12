@@ -133,11 +133,23 @@
   <data name="edit_go24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit_go24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="help16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\help16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="hint" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="left_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\left_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OceanAirdrop128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OceanAirdrop128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OceanAirdrop256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OceanAirdrop256.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OceanAirdrop64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OceanAirdrop64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

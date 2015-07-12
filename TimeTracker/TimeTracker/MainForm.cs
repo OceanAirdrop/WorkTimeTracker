@@ -29,7 +29,9 @@ namespace TimeTracker
         DateTime m_unpauseEndTime;
 
         DateTime m_dateTimeLastWriteToDB = DateTime.MinValue;
+        DateTime m_dateTimeUpdateTotalTimes = DateTime.MinValue;
 
+        ScrollingMarqueeText m_scroll = null;
 
         public bool m_isPaused = false;
 
@@ -65,6 +67,11 @@ namespace TimeTracker
             StartTimer();
 
             buttonPauseTimer.Enabled = false;
+
+            m_scroll = new ScrollingMarqueeText();
+            m_scroll.StartScrollingText(this, labelScrollText, "    ");
+
+            UpdateScrollingText();
         }
 
         private void StartTimer()
@@ -156,7 +163,8 @@ namespace TimeTracker
                 labelCurrentTimer.Text = string.Format("{0}h : {1}m : {2}s", m_stopWatch.Elapsed.Hours.ToString("00"), m_stopWatch.Elapsed.Minutes.ToString("00"), m_stopWatch.Elapsed.Seconds.ToString("00"));
 
                 UpdateDatabaseTimeRecord(false);
-
+                
+                UpdateScrollingText();
                 UpdateTotalTimeWorkedToday();
             }
             catch (Exception ex)
@@ -230,6 +238,7 @@ namespace TimeTracker
         private void buttonStartTimer_Click(object sender, EventArgs e)
         {
             UpdateDatabaseTimeRecord(true);
+            UpdateScrollingText();
 
             TimeSelection dlg = new TimeSelection();
 
@@ -273,6 +282,7 @@ namespace TimeTracker
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     UpdateDatabaseTimeRecord(true);
+                    UpdateScrollingText();
 
                     // lets pause the timer
                     this.buttonPauseTimer.Image = global::TimeTracker.Properties.Resources.start;
@@ -321,22 +331,26 @@ namespace TimeTracker
             m_stopWatch.Stop();
         }
 
+        string TotalMinsToFriendlyTime(double nMinsWorked)
+        {
+            string sqlFriendlyTime = string.Format("SELECT time({0} * 60, 'unixepoch');", nMinsWorked);
+
+            string friendlyTime = LocalSqllite.ExecSQLCommandScalar(sqlFriendlyTime);
+
+            return friendlyTime;
+        }
+
         public void UpdateTotalTimeWorkedToday()
         {
             try
             {
-                string sqlMinsWorked = string.Format("select sum(mins_accrued) from time_sheet where date = '{0}'", DBHelper.DateToDBDate(DateTime.Now));
+                string sqlMinsWorked = string.Format("select  ifnull(sum(mins_accrued),0) from time_sheet where date = '{0}'", DBHelper.DateToDBDate(DateTime.Now));
 
                 string minsWorked = LocalSqllite.ExecSQLCommandScalar(sqlMinsWorked);
 
-                if (minsWorked == "")
-                    minsWorked = "0";
-
                 double nMinsWorked = Convert.ToDouble(minsWorked);
 
-                string sqlFriendlyTime = string.Format("SELECT time({0} * 60, 'unixepoch');", nMinsWorked);
-
-                string friendlyTime = LocalSqllite.ExecSQLCommandScalar(sqlFriendlyTime);
+                string friendlyTime = TotalMinsToFriendlyTime(nMinsWorked);
 
                 string text = "Keep up the good work!";
                 if (nMinsWorked < 60)
@@ -383,6 +397,78 @@ namespace TimeTracker
             }
         }
 
+        private bool GetWeekBeginningAndEnd(out string monday, out string sunday)
+        {
+            bool success = true;
+            monday = sunday = "";
+
+            try
+            {
+                int delta = DayOfWeek.Monday - DateTime.Now.DayOfWeek;
+                DateTime mondayDT = DateTime.Now.AddDays(delta);
+                DateTime sundayDT = mondayDT.AddDays(6);
+
+                monday = DBHelper.DateToDBDate(mondayDT);
+                sunday = DBHelper.DateToDBDate(sundayDT);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                success = false;
+            }
+
+            return success;
+        }
+
+        public void UpdateScrollingText()
+        {
+
+            try
+            {
+                TimeSpan span = DateTime.Now - m_dateTimeUpdateTotalTimes;
+
+                // only call this function once per minute.
+                const int intervalTimeMins = 1;
+                if (span.TotalMinutes < intervalTimeMins)
+                {
+                    return;
+                }
+
+                m_scroll.ClearTextToDisplay();
+
+                string sqlMinsWorked = string.Format("select ifnull(sum(mins_accrued),0) from time_sheet where date = '{0}'", DBHelper.DateToDBDate(DateTime.Now));
+                string minsWorked = LocalSqllite.ExecSQLCommandScalar(sqlMinsWorked);
+
+                string friendlyTime = TotalMinsToFriendlyTime(Convert.ToDouble(minsWorked));
+
+                m_scroll.AddTextToDisplay(string.Format("*** Total time worked today: {0} ***", friendlyTime));
+
+                string monday, sunday;
+                if ( GetWeekBeginningAndEnd(out monday, out sunday) == true )
+                {
+                    string sqlWeek = string.Format("select ifnull(sum(mins_accrued),0) from time_sheet where Date >= Datetime('{0}') and Date <= Datetime('{1}')", monday, sunday);
+                    minsWorked = LocalSqllite.ExecSQLCommandScalar(sqlWeek);
+
+                    friendlyTime = TotalMinsToFriendlyTime(Convert.ToDouble(minsWorked));
+                    m_scroll.AddTextToDisplay(string.Format("*** Total time worked this week: {0} ***", friendlyTime));
+                }
+
+                // SELECT date('now','start of month') -- Get Start date of the month
+                // SELECT date('now','start of month','+1 month','-1 day'); -- Get End date of month
+                string sqlMinsWorkedMonth = "select ifnull(sum(mins_accrued),0) from time_sheet WHERE Date >= date('now','start of month') AND Date <= date('now','start of month','+1 month','-1 day');";
+                string minsWorkedMonth = LocalSqllite.ExecSQLCommandScalar(sqlMinsWorkedMonth);
+
+                friendlyTime = TotalMinsToFriendlyTime(Convert.ToDouble(minsWorkedMonth));
+                m_scroll.AddTextToDisplay(string.Format("*** Total time worked this month: {0} ***", friendlyTime));
+
+                m_dateTimeUpdateTotalTimes = DateTime.Now;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         private void buttonDisplayTimeSheetData_Click(object sender, EventArgs e)
         {
             UpdateDatabaseTimeRecord(true);
@@ -404,9 +490,16 @@ namespace TimeTracker
 
         private void buttonManualEntry_Click(object sender, EventArgs e)
         {
+            UpdateScrollingText();
             ReportDetailed dlg = new ReportDetailed();
             dlg.m_mode = ReportMode.EditMode;
             dlg.Show();
+        }
+
+        private void pictureBoxAbout_Click(object sender, EventArgs e)
+        {
+            AboutBoxForm dlg = new AboutBoxForm();
+            dlg.ShowDialog();
         }
     }
 }

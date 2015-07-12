@@ -59,10 +59,11 @@ namespace TimeTracker.Dialogs
                     // ensure dates are in the correct format to be written to the db
                     string endDate = DBHelper.DateToDBDateTime(Convert.ToDateTime(textBoxWorkEndTime.Text));
                     string statDate = DBHelper.DateToDBDateTime(Convert.ToDateTime(textBoxWorkStartDate.Text));
+                    string date = DBHelper.DateToDBDate(Convert.ToDateTime(textBoxDate.Text));
 
                     // update statment
                     sb.AppendLine("UPDATE time_sheet SET ");
-                    sb.AppendLine(string.Format("date = '{0}'", textBoxDate.Text));
+                    sb.AppendLine(string.Format("date = '{0}'", date));
                     sb.AppendLine(string.Format(",work_start_time = '{0}'", statDate));
                     sb.AppendLine(string.Format(",work_end_time = '{0}'", endDate));
                     sb.AppendLine(string.Format(",pmo_number = '{0}'", textBoxPMONumber.Text));
@@ -163,6 +164,7 @@ namespace TimeTracker.Dialogs
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -194,6 +196,7 @@ namespace TimeTracker.Dialogs
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 buttonOK.Enabled = false;
                 labelError.Show();
                 labelError.Text = "Invalid Time Selection";
@@ -267,6 +270,7 @@ namespace TimeTracker.Dialogs
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 buttonOK.Enabled = false;
                 labelError.Show();
                 labelError.Text = "Invalid Time Selection";

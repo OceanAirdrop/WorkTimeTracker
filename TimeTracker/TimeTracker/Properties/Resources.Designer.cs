@@ -113,6 +113,16 @@ namespace TimeTracker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap help16 {
+            get {
+                object obj = ResourceManager.GetObject("help16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap hint {
             get {
                 object obj = ResourceManager.GetObject("hint", resourceCulture);
@@ -126,6 +136,36 @@ namespace TimeTracker.Properties {
         internal static System.Drawing.Bitmap left_right {
             get {
                 object obj = ResourceManager.GetObject("left_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OceanAirdrop128 {
+            get {
+                object obj = ResourceManager.GetObject("OceanAirdrop128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OceanAirdrop256 {
+            get {
+                object obj = ResourceManager.GetObject("OceanAirdrop256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OceanAirdrop64 {
+            get {
+                object obj = ResourceManager.GetObject("OceanAirdrop64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

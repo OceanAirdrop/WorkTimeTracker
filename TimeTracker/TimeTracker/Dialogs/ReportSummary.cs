@@ -72,12 +72,9 @@ namespace TimeTracker.Dialogs
                 List<string> dayTotals = new List<string>();
                 foreach (string date in m_dates)
                 {
-                    string sql = string.Format("select sum(mins_accrued) from time_sheet where date = '{0}' and pmo_number = '{1}'", date, timerType.pmo_num);
+                    string sql = string.Format("select  ifnull(sum(mins_accrued),0) from time_sheet where date = '{0}' and pmo_number = '{1}'", date, timerType.pmo_num);
 
                     string result = LocalSqllite.ExecSQLCommandScalar(sql);
-
-                    if (result == "")
-                        result = "0";
 
                     dayTotals.Add(result);
                 }
@@ -126,12 +123,9 @@ namespace TimeTracker.Dialogs
                 List<string> dayTotals = new List<string>();
                 foreach (string date in m_dates)
                 {
-                    string sql = string.Format("select sum(mins_accrued) from time_sheet where date = '{0}'", date);
+                    string sql = string.Format("select  ifnull(sum(mins_accrued),0) from time_sheet where date = '{0}'", date);
 
                     string result = LocalSqllite.ExecSQLCommandScalar(sql);
-
-                    if (result == "")
-                        result = "0";
 
                     dayTotals.Add(result);
                 }
